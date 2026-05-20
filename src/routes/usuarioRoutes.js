@@ -7,7 +7,7 @@ import { Usuario } from '../models/index.js';
     router.get('/', async (req, res) => {
         try {
             /*
-            Producto.findAll(): Obtiene todos las autor que haya guardados en la DB
+            Usuario.findAll(): Obtiene todos las Usuarios que haya guardados en la DB
             */
             const usuario = await Usuario.findAll();
             res.status(200).json(usuario);
@@ -16,12 +16,12 @@ import { Usuario } from '../models/index.js';
         }
     });
 
-   // GET /api/product/:id (Obtener uno producto por su id)
+   // GET /api/usuario/:id (Obtener uno producto por su id)
     router.get('/:id', async (req, res) => {usuario
         try {
             const { id } = req.params;
             /*
-            Product.findByPk(id): Similar a findAll, pero obteniendo sólo el registro que coincida con el ID proporcionado.
+            Usuario.findByPk(id): Similar a findAll, pero obteniendo sólo el registro que coincida con el ID proporcionado.
             */
             const usuario = await Usuario.findByPk(id);
             if (usuario) {
@@ -34,11 +34,11 @@ import { Usuario } from '../models/index.js';
         }
     });
 
-    // POST /api/departamentos (Crear uno nuevo)
+    // POST /api/usuario(Crear uno nuevo)
     router.post('/', async (req, res) => {
         try {
             /*
-            Departamento.create(req.body): Crea un nuevo departamento. Recibe un objeto con los atributos que querramos registrar, podemos validar aquí o "confiar" que el objeto viene validado desde el frontend
+            Usuario.create(req.body): Crea un nuevo usuario. Recibe un objeto con los atributos que querramos registrar, podemos validar aquí o "confiar" que el objeto viene validado desde el frontend
             */
             const nuevoUsuario = await Usuario.create(req.body);
             res.status(201).json(nuevoUsuario);
@@ -47,18 +47,18 @@ import { Usuario } from '../models/index.js';
                 // A veces, pueden ocurrir multiples errores a la vez, el detalle lo encontramos en `error.errors`, el cual es un array y podemos mapearlo.
                 return res.status(400).json({ message: 'Error de validación', errors: error.errors ? error.errors.map(e => e.message) : error.message });
             }
-            res.status(500).json({ message: 'Error al crear pizza', error: error.message });
+            res.status(500).json({ message: 'Error al crear usuario', error: error.message });
         }
     });
 
-    // PUT /api/products/:id (Actualizar uno existente)
+    // PUT /api/usuario/:id (Actualizar uno existente)
     router.put('/:id', async (req, res) => {
         try {
             const { id } = req.params;
             const usuario = await Usuario.findByPk(id);
             if (usuario) {
                 /*
-                departamento.update(req.body): Actualiza la instancia del departamento enviandole un objeto con los atributos a reemplazar. 
+                departamento.update(req.body): Actualiza la instancia del usuario enviandole un objeto con los atributos a reemplazar. 
                 Notar que `.update()` es un método de instancia, no estático como `.findAll()`
                 */
                 const usuarioActualizado = await usuario.update(req.body);
@@ -74,11 +74,11 @@ import { Usuario } from '../models/index.js';
         }
     });
 
-    // DELETE /api/autor/:id (Eliminar uno)
+    // DELETE /api/usuario/:id (Eliminar uno)
     router.delete('/:id', async (req, res) => {
         try {
             const { id } = req.params;
-            // Departamento.destroy({ where: { id } }): Elimina el departamento filtrando por el campo `id`. Devuelve la cantidad de registros afectados por la eliminación.
+            // Departamento.destroy({ where: { id } }): Elimina el usuario filtrando por el campo `id`. Devuelve la cantidad de registros afectados por la eliminación.
             const resultado = await Usuario.destroy({ where: { id: id } });
             if (resultado > 0) {
                 res.status(200).json({ message: 'Usuario eliminado exitosamente' });
